@@ -6,16 +6,18 @@ const rawApiBase = import.meta.env.VITE_API_BASE_URL?.trim()
 let baseURL = apiPrefix
 
 if (rawApiBase) {
-  const normalizedApiBase = rawApiBase.replace(/\/$/, '')
+  let normalizedApiBase = rawApiBase.replace(/\/$/, '')
   try {
     if (normalizedApiBase.startsWith('/') || normalizedApiBase.startsWith('./') || normalizedApiBase.startsWith('../')) {
       baseURL = `${normalizedApiBase}${apiPrefix}`
     } else {
+      if (!normalizedApiBase.startsWith('http://') && !normalizedApiBase.startsWith('https://')) {
+        normalizedApiBase = `https://${normalizedApiBase}`
+      }
       new URL(normalizedApiBase)
       baseURL = `${normalizedApiBase}${apiPrefix}`
     }
   } catch (error) {
-    // Fallback to relative prefix when env contains invalid URL data.
     console.warn('Invalid VITE_API_BASE_URL, falling back to API prefix:', rawApiBase, error)
     baseURL = apiPrefix
   }

@@ -32,12 +32,6 @@ def get_current_user(
         if not supabase_uid or not email:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token claims")
 
-        if not payload.get("email_confirmed_at"):
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Email not confirmed. Please check your inbox and confirm your email address.",
-            )
-
         # Look up by Supabase UUID
         user = get_user_by_id(db, supabase_uid)
         if user:

@@ -7,6 +7,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { BillingPage } from '@/pages/BillingPage'
 import { ProfilePage } from '@/pages/ProfilePage'
+import { LandingPage } from '@/pages/LandingPage'
 import { useAuthStore } from '@/store/authStore'
 
 const queryClient = new QueryClient({
@@ -25,6 +26,7 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route element={<AppLayout />}>
@@ -34,7 +36,7 @@ export default function App() {
               <Route path="/billing/cancel" element={<Navigate to="/billing" replace />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

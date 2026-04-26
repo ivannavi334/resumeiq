@@ -1,14 +1,26 @@
+import { useState } from 'react'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { FileText } from 'lucide-react'
+import { FileText, ChevronDown, ChevronUp } from 'lucide-react'
 import { Navigate, Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/store/authStore'
 
 export function LoginPage() {
   const session = useAuthStore((s) => s.session)
+  const [showResend, setShowResend] = useState(false)
+  const [resendEmail, setResendEmail] = useState('')
+  const [resendStatus, setResendStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
 
   if (session) return <Navigate to="/dashboard" replace />
+
+  async function handleResend(e: React.FormEvent) {
+    e.preventDefault()
+    if (!resendEmail) return
+    setResendStatus('loading')
+    const { error } = await supabase.auth.resend({ type: 'signup', email: resendEmail })
+    setResendStatus(error ? 'error' : 'sent')
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
@@ -23,6 +35,7 @@ export function LoginPage() {
           <Auth
             supabaseClient={supabase}
             view="sign_in"
+            redirectTo={`${window.location.origin}/auth/callback`}
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -40,6 +53,48 @@ export function LoginPage() {
               Sign up
             </Link>
           </p>
+        </div>
+
+        {/* Resend confirmation section */}
+        <div className="mt-4 rounded-xl border border-gray-200 bg-white shadow-sm">
+          <button
+            onClick={() => setShowResend(!showResend)}
+            className="flex w-full items-center justify-between px-5 py-3.5 text-sm text-gray-600 hover:text-gray-900"
+          >
+            <span>Не получили письмо с подтверждением?</span>
+            {showResend ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </button>
+
+          {showResend && (
+            <div className="border-t border-gray-100 px-5 pb-5 pt-4">
+              {resendStatus === 'sent' ? (
+                <p className="text-sm text-green-600">
+                  ✓ Письмо отправлено повторно. Проверьте папку «Входящие» и «Спам».
+                </p>
+              ) : (
+                <form onSubmit={handleResend} className="flex gap-2">
+                  <input
+                    type="email"
+                    placeholder="Ваш email"
+                    value={resendEmail}
+                    onChange={(e) => setResendEmail(e.target.value)}
+                    required
+                    className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  />
+                  <button
+                    type="submit"
+                    disabled={resendStatus === 'loading'}
+                    className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+                  >
+                    {resendStatus === 'loading' ? '...' : 'Отправить'}
+                  </button>
+                </form>
+              )}
+              {resendStatus === 'error' && (
+                <p className="mt-2 text-xs text-red-500">Не удалось отправить письмо. Проверьте адрес и попробуйте снова.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

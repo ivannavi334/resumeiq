@@ -23,6 +23,7 @@ export function RegisterPage() {
           <Auth
             supabaseClient={supabase}
             view="sign_up"
+            redirectTo={`${window.location.origin}/auth/callback`}
             appearance={{
               theme: ThemeSupa,
               variables: {

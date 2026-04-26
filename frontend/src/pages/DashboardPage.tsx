@@ -20,7 +20,7 @@ export function DashboardPage() {
 
   const { data: resumes = [], isLoading } = useQuery({
     queryKey: ['resumes'],
-    queryFn: resumeService.list,
+    queryFn: () => resumeService.list(),
   })
 
   const uploadMutation = useMutation({

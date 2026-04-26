@@ -53,7 +53,7 @@ export function ProfilePage() {
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Analyses this month</span>
-            <span className="font-medium text-gray-900">{profile?.analyses_count ?? 0}</span>
+            <span className="font-medium text-gray-900">{profile?.analyses_used_this_month ?? 0}</span>
           </div>
         </CardBody>
       </Card>

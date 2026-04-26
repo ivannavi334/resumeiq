@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { api } from '@/services/api'
 import type { UserProfile } from '@/types'
 
 export const authService = {
@@ -25,31 +26,11 @@ export const authService = {
   },
 
   async getProfile(): Promise<UserProfile | null> {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return null
-
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', user.id)
-      .single()
-
-    if (error) throw error
-    return data as UserProfile
-  },
-
-  async updateProfile(updates: { plan?: UserProfile['plan'] }) {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) throw new Error('Not authenticated')
-
-    const { data, error } = await supabase
-      .from('users')
-      .update(updates)
-      .eq('id', user.id)
-      .select()
-      .single()
-
-    if (error) throw error
-    return data as UserProfile
+    try {
+      const { data } = await api.get<UserProfile>('/auth/me')
+      return data
+    } catch {
+      return null
+    }
   },
 }

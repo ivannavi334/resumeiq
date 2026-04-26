@@ -11,7 +11,7 @@ import { formatDate, formatFileSize } from '@/utils/format'
 import type { Resume, ResumeAnalysis } from '@/types'
 
 export function DashboardPage() {
-  const { profile } = useAuthStore()
+  const { profile, refreshProfile } = useAuthStore()
   const qc = useQueryClient()
   const [showUpload, setShowUpload] = useState(false)
   const [activeResumeId, setActiveResumeId] = useState<string | null>(null)
@@ -35,7 +35,10 @@ export function DashboardPage() {
 
   const analyzeMutation = useMutation({
     mutationFn: ({ id, jd }: { id: string; jd: string }) => resumeService.analyze(id, jd || undefined),
-    onSuccess: (analysis) => setActiveAnalysis(analysis),
+    onSuccess: (analysis) => {
+      setActiveAnalysis(analysis)
+      refreshProfile()
+    },
   })
 
   return (
@@ -46,8 +49,8 @@ export function DashboardPage() {
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
           {profile && (
             <p className="mt-1 text-sm text-gray-500">
-              {profile.analyses_count} analyses used this month
-              {profile.plan === 'free' && ` · ${3 - profile.analyses_count} remaining`}
+              {profile.analyses_used_this_month} analyses used this month
+              {profile.plan === 'free' && ` · ${3 - profile.analyses_used_this_month} remaining`}
             </p>
           )}
         </div>

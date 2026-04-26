@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
@@ -22,8 +22,20 @@ async def upload_resume(
 
 
 @router.get("/", response_model=List[ResumeRead])
-def list_resumes(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return db.query(Resume).filter(Resume.owner_id == current_user.id).order_by(Resume.created_at.desc()).all()
+def list_resumes(
+    skip: int = Query(default=0, ge=0),
+    limit: int = Query(default=20, ge=1, le=100),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    return (
+        db.query(Resume)
+        .filter(Resume.owner_id == current_user.id)
+        .order_by(Resume.created_at.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 @router.get("/{resume_id}", response_model=ResumeRead)

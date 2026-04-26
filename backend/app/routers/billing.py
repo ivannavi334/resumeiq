@@ -101,14 +101,14 @@ async def stripe_webhook(request: Request, stripe_signature: str = Header(None),
         user_id = session["metadata"].get("user_id")
         if user_id:
             user = db.query(User).filter(User.id == user_id).first()
-            if user:
-                price_id = session.get("line_items", {})
-                if session.get("subscription"):
-                    user.stripe_customer_id = session["customer"]
-                    if settings.STRIPE_PRICE_ID_ENTERPRISE and price_id == settings.STRIPE_PRICE_ID_ENTERPRISE:
-                        user.plan = UserPlan.ENTERPRISE
-                    else:
-                        user.plan = UserPlan.PRO
-                    db.commit()
+            if user and session.get("subscription"):
+                line_items = stripe.checkout.Session.list_line_items(session["id"], limit=1)
+                price_id = line_items.data[0].price.id if line_items.data else None
+                user.stripe_customer_id = session["customer"]
+                if settings.STRIPE_PRICE_ID_ENTERPRISE and price_id == settings.STRIPE_PRICE_ID_ENTERPRISE:
+                    user.plan = UserPlan.ENTERPRISE
+                else:
+                    user.plan = UserPlan.PRO
+                db.commit()
 
     return {"status": "ok"}

@@ -1,11 +1,15 @@
-export type UserPlan = 'free' | 'pro'
+export type UserPlan = 'free' | 'pro' | 'enterprise'
 
-/** Row from public.users in Supabase */
+/** User profile from backend /auth/me */
 export interface UserProfile {
   id: string
   email: string
+  full_name: string | null
+  avatar_url: string | null
   plan: UserPlan
-  analyses_count: number
+  analyses_used_this_month: number
+  is_active: boolean
+  is_verified: boolean
   created_at: string
 }
 

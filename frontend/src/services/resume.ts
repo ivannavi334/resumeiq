@@ -11,8 +11,8 @@ export const resumeService = {
     return data
   },
 
-  async list(): Promise<Resume[]> {
-    const { data } = await api.get<Resume[]>('/resumes/')
+  async list(skip = 0, limit = 20): Promise<Resume[]> {
+    const { data } = await api.get<Resume[]>('/resumes/', { params: { skip, limit } })
     return data
   },
 

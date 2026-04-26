@@ -1,5 +1,6 @@
 import json
 import uuid
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, UploadFile, status
@@ -22,7 +23,15 @@ ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".txt"}
 MAX_FILE_SIZE_MB = 10
 
 
-def check_analysis_quota(user: User) -> None:
+def check_analysis_quota(user: User, db: Session) -> None:
+    now = datetime.now(timezone.utc)
+    reset_at = user.analyses_reset_at
+    if reset_at is not None and reset_at.tzinfo is None:
+        reset_at = reset_at.replace(tzinfo=timezone.utc)
+    if reset_at is None or now - reset_at >= timedelta(days=30):
+        user.analyses_used_this_month = 0
+        user.analyses_reset_at = now
+        db.commit()
     limit = PLAN_LIMITS.get(user.plan, 3)
     if user.analyses_used_this_month >= limit:
         raise HTTPException(
@@ -149,7 +158,7 @@ def create_resume(db: Session, user: User, filename: str, original_filename: str
 
 
 def create_analysis(db: Session, user: User, resume: Resume, job_description: str | None) -> ResumeAnalysis:
-    check_analysis_quota(user)
+    check_analysis_quota(user, db)
     analysis = ResumeAnalysis(resume_id=resume.id, job_description=job_description, status=ResumeStatus.PROCESSING)
     db.add(analysis)
     db.commit()

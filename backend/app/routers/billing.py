@@ -77,8 +77,8 @@ def create_checkout_session(
         payment_method_types=["card"],
         line_items=[{"price": price_id, "quantity": 1}],
         mode="subscription",
-        success_url="http://localhost:5173/billing/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url="http://localhost:5173/billing/cancel",
+        success_url=f"{settings.FRONTEND_URL}/dashboard?upgraded=true",
+        cancel_url=f"{settings.FRONTEND_URL}/billing",
         metadata={"user_id": str(current_user.id)},
     )
     return {"checkout_url": session.url}

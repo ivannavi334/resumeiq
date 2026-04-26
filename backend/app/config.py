@@ -56,6 +56,9 @@ class Settings(BaseSettings):
     AWS_REGION: str = "us-east-1"
     AWS_S3_BUCKET: str = "resumeiq-files"
 
+    RESEND_API_KEY: str = ""
+    EMAIL_FROM: str = "ResumeIQ <onboarding@resend.dev>"
+
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587
     SMTP_USER: str = ""

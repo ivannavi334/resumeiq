@@ -1,10 +1,8 @@
 import logging
 from datetime import datetime
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from pathlib import Path
 
-import aiosmtplib
+import resend
 from jinja2 import Environment, FileSystemLoader
 
 from app.config import settings
@@ -20,21 +18,18 @@ async def _send(to: str, subject: str, html: str) -> None:
         logger.info("[DEV EMAIL] To: %s | Subject: %s\n%.300s", to, subject, html)
         return
 
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = settings.SMTP_FROM
-    msg["To"] = to
-    msg.attach(MIMEText(html, "html", "utf-8"))
+    if not settings.RESEND_API_KEY:
+        logger.warning("RESEND_API_KEY not set, skipping email to %s", to)
+        return
 
+    resend.api_key = settings.RESEND_API_KEY
     try:
-        await aiosmtplib.send(
-            msg,
-            hostname=settings.SMTP_HOST,
-            port=settings.SMTP_PORT,
-            username=settings.SMTP_USER,
-            password=settings.SMTP_PASSWORD,
-            start_tls=True,
-        )
+        resend.Emails.send({
+            "from": settings.EMAIL_FROM,
+            "to": [to],
+            "subject": subject,
+            "html": html,
+        })
         logger.info("Email sent to %s: %s", to, subject)
     except Exception as exc:
         logger.error("Failed to send email to %s: %s", to, exc)

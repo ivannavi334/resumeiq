@@ -30,14 +30,7 @@ export default function App() {
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/billing" element={<BillingPage />} />
-              <Route
-                path="/billing/success"
-                element={
-                  <div className="py-12 text-center text-green-600 text-lg font-semibold">
-                    Payment successful! Your plan has been upgraded.
-                  </div>
-                }
-              />
+              <Route path="/billing/success" element={<Navigate to="/dashboard?upgraded=true" replace />} />
               <Route path="/billing/cancel" element={<Navigate to="/billing" replace />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>

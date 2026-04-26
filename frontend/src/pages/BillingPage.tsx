@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Check, X, Zap, Building2 } from 'lucide-react'
 import { billingService } from '@/services/billing'
@@ -28,7 +29,9 @@ function Cell({ value }: { value: boolean | string }) {
 }
 
 export function BillingPage() {
-  const { profile } = useAuthStore()
+  const { profile, refreshProfile } = useAuthStore()
+
+  useEffect(() => { refreshProfile() }, [])
 
   const { data } = useQuery({
     queryKey: ['plans'],

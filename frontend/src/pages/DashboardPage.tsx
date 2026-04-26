@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Trash2, BarChart2, FileText, Plus, ChevronDown, ChevronUp } from 'lucide-react'
 import { resumeService } from '@/services/resume'
 import { useAuthStore } from '@/store/authStore'
 import { Button } from '@/components/ui/Button'
 import { Card, CardBody, CardHeader } from '@/components/ui/Card'
+import { Toast } from '@/components/ui/Toast'
 import { UploadZone } from '@/components/resume/UploadZone'
 import { AnalysisResult } from '@/components/resume/AnalysisResult'
 import { formatDate, formatFileSize } from '@/utils/format'
@@ -13,7 +15,19 @@ import type { Resume, ResumeAnalysis } from '@/types'
 export function DashboardPage() {
   const { profile, refreshProfile } = useAuthStore()
   const qc = useQueryClient()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [showUpload, setShowUpload] = useState(false)
+  const [showUpgradeToast, setShowUpgradeToast] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get('upgraded') === 'true') {
+      refreshProfile()
+      setShowUpgradeToast(true)
+      setSearchParams({}, { replace: true })
+    }
+  }, [])
+
+  const closeToast = useCallback(() => setShowUpgradeToast(false), [])
   const [activeResumeId, setActiveResumeId] = useState<string | null>(null)
   const [jobDescription, setJobDescription] = useState('')
   const [activeAnalysis, setActiveAnalysis] = useState<ResumeAnalysis | null>(null)
@@ -41,8 +55,16 @@ export function DashboardPage() {
     },
   })
 
+  const planLabel = profile?.plan === 'enterprise' ? 'Enterprise' : 'Pro'
+
   return (
     <div className="space-y-8">
+      {showUpgradeToast && (
+        <Toast
+          message={`You're now on the ${planLabel} plan! Enjoy your new features.`}
+          onClose={closeToast}
+        />
+      )}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

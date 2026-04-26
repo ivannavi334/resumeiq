@@ -3,7 +3,7 @@ import { FileText, LogOut, User, CreditCard } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { Badge } from '@/components/ui/Badge'
 
-const planVariant = { free: 'default', pro: 'purple' } as const
+const planVariant = { free: 'default', pro: 'purple', enterprise: 'purple' } as const
 
 export function Navbar() {
   const { user, profile, logout } = useAuthStore()

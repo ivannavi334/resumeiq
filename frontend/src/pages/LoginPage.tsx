@@ -61,7 +61,7 @@ export function LoginPage() {
             onClick={() => setShowResend(!showResend)}
             className="flex w-full items-center justify-between px-5 py-3.5 text-sm text-gray-600 hover:text-gray-900"
           >
-            <span>Не получили письмо с подтверждением?</span>
+            <span>Didn't receive your confirmation email?</span>
             {showResend ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </button>
 
@@ -69,13 +69,13 @@ export function LoginPage() {
             <div className="border-t border-gray-100 px-5 pb-5 pt-4">
               {resendStatus === 'sent' ? (
                 <p className="text-sm text-green-600">
-                  ✓ Письмо отправлено повторно. Проверьте папку «Входящие» и «Спам».
+                  ✓ Email sent again. Please check your inbox and spam folders.
                 </p>
               ) : (
                 <form onSubmit={handleResend} className="flex gap-2">
                   <input
                     type="email"
-                    placeholder="Ваш email"
+                    placeholder="Your email"
                     value={resendEmail}
                     onChange={(e) => setResendEmail(e.target.value)}
                     required
@@ -86,12 +86,12 @@ export function LoginPage() {
                     disabled={resendStatus === 'loading'}
                     className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
                   >
-                    {resendStatus === 'loading' ? '...' : 'Отправить'}
+                    {resendStatus === 'loading' ? '...' : 'Resend Email'}
                   </button>
                 </form>
               )}
               {resendStatus === 'error' && (
-                <p className="mt-2 text-xs text-red-500">Не удалось отправить письмо. Проверьте адрес и попробуйте снова.</p>
+                <p className="mt-2 text-xs text-red-500">Failed to send email. Please check the address and try again.</p>
               )}
             </div>
           )}

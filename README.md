@@ -33,7 +33,7 @@ Getting past ATS (Applicant Tracking Systems) is one of the biggest invisible ba
 ![User Dashboard](./docs/screenshots/dashboard.png)
 
 ### Sign In Page
-![Sign_In_Page](./docs/screenshots/singing_in.png)
+![Sign_In_Page](./docs/screenshots/signing_in.png)
 
 <!-- Add more screenshots below — just copy and paste these lines -->
 <!-- ### Section Name -->
@@ -301,4 +301,4 @@ pytest tests/ -v
 
 ## 👤 Author
 
-**Ivan Fomenko** · [GitHub](https://github.com/ivannavi334) · [LinkedIn](www.linkedin.com/in/ivan-fomenko-14363b3a5) · [Live Demo](https://resumeiq-jet.vercel.app)
+**Ivan Fomenko** · [GitHub](https://github.com/ivannavi334) · [LinkedIn](https://www.linkedin.com/in/ivan-fomenko-14363b3a5) · [Live Demo](https://resumeiq-jet.vercel.app)

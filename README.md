@@ -13,7 +13,7 @@
 
 ## 💡 Motivation
 
-Getting past ATS (Applicant Tracking Systems) is one of the biggest invisible barriers for job seekers — most resumes are rejected before a human ever reads them. I built ResumeIQ to give everyone access to the same feedback that career coaches charge hundreds of dollars for, instantly and at scale. The goal is simple: help people understand exactly why their resume isn't landing interviews and what to do about it. By combining AI analysis with job description matching, ResumeIQ turns vague rejection into actionable, prioritized improvements.
+Getting past ATS (Applicant Tracking Systems) is one of the biggest invisible barriers for job seekers — most resumes are rejected before a human ever reads them. I built ResumeIQ to give everyone access to the same feedback that career coaches charge hundreds of dollars for, instantly and at scale. The goal is simple: help people understand exactly why their resume isn't landing interviews and what to do about it. By combining AI analysis with job description matching, ResumeIQ turns vague rejection into actionable, prioritized improvements. 
 
 **→ [Try it live: resumeiq-jet.vercel.app](https://resumeiq-jet.vercel.app)**
 

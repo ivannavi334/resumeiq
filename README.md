@@ -14,13 +14,18 @@
 ## 📸 Preview
 
 ### Resume Analysis & ATS Scoring
-![Resume Analysis](./docs/screenshots/analysis.png)
+![Resume Analysis](./docs/screenshots/analysis(1).png)
+(./docs/screenshots/analysis(2).png)
 
 ### Pricing & Billing Plans
 ![Pricing Plans](./docs/screenshots/pricing.png)
+![Billing_Page](./docs/screenshots/billing.png)
 
 ### User Dashboard
 ![User Dashboard](./docs/screenshots/dashboard.png)
+
+### Sing In Page
+![Sign_In_Page](./docs/screenshots/singing_in.png)
 
 <!-- Add more screenshots below — just copy and paste these lines -->
 <!-- ### Section Name -->

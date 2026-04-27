@@ -14,8 +14,8 @@
 ## 📸 Preview
 
 ### Resume Analysis & ATS Scoring
-![Resume Analysis](./docs/screenshots/analysis(1).png)
-(./docs/screenshots/analysis(2).png)
+![Resume Analysis(1)](./docs/screenshots/analysis(1).png)
+![Resume Analysis(2)](./docs/screenshots/analysis(2).png)
 
 ### Pricing & Billing Plans
 ![Pricing Plans](./docs/screenshots/pricing.png)

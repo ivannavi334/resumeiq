@@ -5,6 +5,7 @@
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
 [![Powered by FastAPI](https://img.shields.io/badge/Powered%20by-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![CI](https://github.com/ivannavi334/resumeiq/actions/workflows/ci.yml/badge.svg)](https://github.com/ivannavi334/resumeiq/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/ivannavi334/resumeiq/branch/main/graph/badge.svg)](https://codecov.io/gh/ivannavi334/resumeiq)
 
 > AI-powered resume analysis SaaS. Upload your resume, optionally paste a job description, and get instant ATS scoring with actionable improvement feedback powered by OpenAI GPT-4o-mini.
 
@@ -234,6 +235,26 @@ resumeiq/
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## 🧪 Testing
+
+The backend has a pytest suite with **48 tests** and **80% code coverage**.
+
+| Area | Tests |
+|------|-------|
+| Auth (register, login, JWT, password) | 18 |
+| Resume (upload, list, delete, analyze, quota) | 19 |
+| Billing (plans, Stripe checkout, webhooks) | 11 |
+
+All external APIs (OpenAI, Stripe, Resend) are mocked — no credentials needed to run tests.
+
+```bash
+cd backend
+pip install -r requirements.txt
+pytest tests/ -v --cov=app --cov-report=term-missing
+```
 
 ---
 

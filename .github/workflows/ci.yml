@@ -40,5 +40,12 @@ jobs:
         working-directory: backend
         run: |
           pytest tests/ -v --tb=short \
-            --cov=app --cov-report=term-missing \
+            --cov=app --cov-report=term-missing --cov-report=xml \
             --cov-fail-under=70
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./backend/coverage.xml
+          fail_ci_if_error: false

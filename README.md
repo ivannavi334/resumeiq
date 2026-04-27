@@ -4,8 +4,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Made with React](https://img.shields.io/badge/Made%20with-React-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
 [![Powered by FastAPI](https://img.shields.io/badge/Powered%20by-FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
+[![CI](https://github.com/ivannavi334/resumeiq/actions/workflows/ci.yml/badge.svg)](https://github.com/ivannavi334/resumeiq/actions/workflows/ci.yml)
 
 > AI-powered resume analysis SaaS. Upload your resume, optionally paste a job description, and get instant ATS scoring with actionable improvement feedback powered by OpenAI GPT-4o-mini.
+
+---
+
+## 💡 Motivation
+
+Getting past ATS (Applicant Tracking Systems) is one of the biggest invisible barriers for job seekers — most resumes are rejected before a human ever reads them. I built ResumeIQ to give everyone access to the same feedback that career coaches charge hundreds of dollars for, instantly and at scale. The goal is simple: help people understand exactly why their resume isn't landing interviews and what to do about it. By combining AI analysis with job description matching, ResumeIQ turns vague rejection into actionable, prioritized improvements.
 
 **→ [Try it live: resumeiq-jet.vercel.app](https://resumeiq-jet.vercel.app)**
 
@@ -24,7 +31,7 @@
 ### User Dashboard
 ![User Dashboard](./docs/screenshots/dashboard.png)
 
-### Sing In Page
+### Sign In Page
 ![Sign_In_Page](./docs/screenshots/singing_in.png)
 
 <!-- Add more screenshots below — just copy and paste these lines -->
@@ -216,7 +223,7 @@ resumeiq/
 │   └── railway.json
 │
 ├── docs/
-│   └── screenshots/        # ← СКРИНШОТЫ СЮДА
+│   └── screenshots/
 │
 ├── README.md
 └── LICENSE
@@ -230,6 +237,47 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
+## 🖥️ Local Development
+
+### Backend (FastAPI)
+
+```bash
+cd backend
+python -m venv .venv
+# Linux/macOS:
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
+
+pip install -r requirements.txt
+cp .env.example .env          # fill in your credentials
+alembic upgrade head           # apply DB migrations
+uvicorn app.main:app --reload --port 8000
+```
+
+The API will be available at `http://localhost:8000`.  
+Interactive docs (debug mode): `http://localhost:8000/api/docs`
+
+### Frontend (React + Vite)
+
+```bash
+cd frontend
+npm install
+cp .env.example .env.local    # set VITE_API_BASE_URL=http://localhost:8000
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`.
+
+### Running Tests
+
+```bash
+cd backend
+pytest tests/ -v
+```
+
+---
+
 ## 👤 Author
 
-**ivannavi334** · [GitHub](https://github.com/ivannavi334) · [Live Demo](https://resumeiq-jet.vercel.app)
+**Ivan Fomenko** · [GitHub](https://github.com/ivannavi334) · [LinkedIn](www.linkedin.com/in/ivan-fomenko-14363b3a5) · [Live Demo](https://resumeiq-jet.vercel.app)

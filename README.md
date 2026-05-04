@@ -108,6 +108,21 @@ Getting past ATS (Applicant Tracking Systems) is one of the biggest invisible ba
 
 ---
 
+## 💳 Test Payments
+
+Stripe runs in test mode. Use these credentials to simulate a successful payment:
+
+| Field | Value |
+|-------|-------|
+| **Card number** | `4242 4242 4242 4242` |
+| **Expiry** | Any future date (e.g. `12/28`) |
+| **CVC** | Any 3 digits (e.g. `123`) |
+| **Name** | Any name |
+
+No real charges are made.
+
+---
+
 ## 🚀 How It Works
 
 1. Sign up with email — confirmation sent via **Resend**

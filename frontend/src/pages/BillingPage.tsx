@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Check, X, Zap, Building2 } from 'lucide-react'
+import { Check, X, Zap, Building2, CreditCard } from 'lucide-react'
 import { billingService } from '@/services/billing'
 import { useAuthStore } from '@/store/authStore'
 import { Button } from '@/components/ui/Button'
@@ -147,6 +147,30 @@ export function BillingPage() {
                 Upgrade to Enterprise
               </Button>
             )}
+          </div>
+        </div>
+      </div>
+      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <div className="flex items-start gap-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100">
+            <CreditCard className="h-5 w-5 text-amber-600" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-amber-900">Test mode — no real charges</p>
+            <p className="mt-0.5 text-sm text-amber-700">Use the following card to simulate a successful payment:</p>
+            <div className="mt-3 flex flex-wrap gap-3">
+              {[
+                { label: 'Card number', value: '4242 4242 4242 4242' },
+                { label: 'Expiry', value: 'Any future date' },
+                { label: 'CVC', value: 'Any 3 digits' },
+                { label: 'Name', value: 'Any name' },
+              ].map(({ label, value }) => (
+                <div key={label} className="rounded-lg border border-amber-200 bg-white px-3 py-2">
+                  <p className="text-xs text-amber-500">{label}</p>
+                  <p className="font-mono text-sm font-semibold text-amber-900">{value}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
